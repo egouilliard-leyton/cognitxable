@@ -36,9 +36,32 @@ function resolveRepoRoot(project: Project): string {
   return path.isAbsolute(repoPath) ? repoPath : path.resolve(process.cwd(), repoPath);
 }
 
-function envFilePath(project: Project): string {
+const ALLOWED_ENV_TARGETS = new Set(['.env', 'leytongo-front/.env', 'leytongo-back/.env']);
+
+function normalizeTargetEnvPath(relativeEnvPath?: string): string {
+  const raw = typeof relativeEnvPath === 'string' && relativeEnvPath.trim().length > 0
+    ? relativeEnvPath.trim()
+    : '.env';
+
+  // Normalize Windows separators and strip leading "./"
+  const normalized = raw.replace(/\\/g, '/').replace(/^\.\//, '');
+
+  // Safety: reject absolute paths and traversal
+  if (normalized.startsWith('/') || normalized.includes('..')) {
+    throw new Error('Invalid env target path');
+  }
+
+  if (!ALLOWED_ENV_TARGETS.has(normalized)) {
+    throw new Error(`Unsupported env target path: ${normalized}`);
+  }
+
+  return normalized;
+}
+
+function envFilePath(project: Project, relativeEnvPath?: string): string {
   const repoRoot = resolveRepoRoot(project);
-  return path.join(repoRoot, '.env');
+  const target = normalizeTargetEnvPath(relativeEnvPath);
+  return path.join(repoRoot, target);
 }
 
 async function ensureProject(projectId: string): Promise<Project> {
@@ -156,9 +179,9 @@ export async function deleteEnvVar(projectId: string, key: string): Promise<bool
   }
 }
 
-export async function syncDbToEnvFile(projectId: string): Promise<number> {
+export async function syncDbToEnvFile(projectId: string, relativeEnvPath?: string): Promise<number> {
   const project = await ensureProject(projectId);
-  const repoEnvPath = envFilePath(project);
+  const repoEnvPath = envFilePath(project, relativeEnvPath);
 
   const envVars = await prisma.envVar.findMany({
     where: { projectId },
@@ -216,9 +239,9 @@ function parseEnvFile(contents: string): Record<string, string> {
   return result;
 }
 
-export async function syncEnvFileToDb(projectId: string): Promise<number> {
+export async function syncEnvFileToDb(projectId: string, relativeEnvPath?: string): Promise<number> {
   const project = await ensureProject(projectId);
-  const repoEnvPath = envFilePath(project);
+  const repoEnvPath = envFilePath(project, relativeEnvPath);
 
   let fileContents = '';
   try {
@@ -286,9 +309,9 @@ export async function syncEnvFileToDb(projectId: string): Promise<number> {
   return changes;
 }
 
-export async function detectEnvConflicts(projectId: string) {
+export async function detectEnvConflicts(projectId: string, relativeEnvPath?: string) {
   const project = await ensureProject(projectId);
-  const repoEnvPath = envFilePath(project);
+  const repoEnvPath = envFilePath(project, relativeEnvPath);
 
   let fileContents = '';
   try {

@@ -7,6 +7,7 @@ import type { Project, CreateProjectInput, UpdateProjectInput } from '@/types/ba
 import fs from 'fs/promises';
 import path from 'path';
 import { normalizeModelId, getDefaultModelForCli } from '@/lib/constants/cliModels';
+import { scaffoldLeytongoMonorepo } from '@/lib/utils/scaffold';
 
 const PROJECTS_DIR = process.env.PROJECTS_DIR || './data/projects';
 const PROJECTS_DIR_ABSOLUTE = path.isAbsolute(PROJECTS_DIR)
@@ -49,6 +50,7 @@ export async function createProject(input: CreateProjectInput): Promise<Project>
   // Create project directory
   const projectPath = path.join(PROJECTS_DIR_ABSOLUTE, input.project_id);
   await fs.mkdir(projectPath, { recursive: true });
+  await scaffoldLeytongoMonorepo(projectPath, input.project_id);
 
   // Create project in database
   const project = await prisma.project.create({
@@ -61,7 +63,7 @@ export async function createProject(input: CreateProjectInput): Promise<Project>
       preferredCli: input.preferredCli || 'claude',
       selectedModel: normalizeModelId(input.preferredCli || 'claude', input.selectedModel ?? getDefaultModelForCli(input.preferredCli || 'claude')),
       status: 'idle',
-      templateType: 'nextjs',
+      templateType: 'leytongo-monorepo',
       lastActiveAt: new Date(),
       previewUrl: null,
       previewPort: null,

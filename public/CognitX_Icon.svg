@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none" role="img" aria-label="CognitXable">
+  <title>CognitXable</title>
+  <rect x="48" y="48" width="416" height="416" rx="96" fill="#0B2C4B" />
+
+  <!-- Simple monogram inspired by the CognitX mark -->
+  <circle cx="214" cy="214" r="18" fill="#2BB3E6" />
+  <path
+    d="M170 350L262 162H304L212 350H170Z"
+    fill="#2BB3E6"
+  />
+  <path
+    d="M342 350L254 256L342 162H386L296 256L386 350H342Z"
+    fill="#2BB3E6"
+  />
+</svg>
+
+

@@ -6,10 +6,13 @@ import Header from '@/components/layout/Header'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Claudable',
-  description: 'Claudable Application',
+  title: 'CognitXable',
+  description: 'CognitXable Application',
   icons: {
-    icon: '/Claudable_Icon.png',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
   },
 }
 

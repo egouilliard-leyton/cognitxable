@@ -43,17 +43,17 @@
   /* Modern gradient modal background with subtle pattern */
   .modal-backdrop {
     background: 
-      radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 20% 20%, rgba(43, 179, 230, 0.22) 0%, transparent 52%),
+      radial-gradient(circle at 80% 80%, rgba(15, 80, 110, 0.18) 0%, transparent 55%),
+      radial-gradient(circle at 40% 40%, rgba(76, 202, 255, 0.18) 0%, transparent 55%),
       linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   }
   
   .modal-content {
     @apply bg-white rounded-2xl shadow-2xl border border-gray-100;
     background: 
-      radial-gradient(circle at 100% 0%, rgba(120, 119, 198, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 0% 100%, rgba(255, 119, 198, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 100% 0%, rgba(43, 179, 230, 0.06) 0%, transparent 55%),
+      radial-gradient(circle at 0% 100%, rgba(15, 80, 110, 0.05) 0%, transparent 55%),
       white;
   }
 }
@@ -62,13 +62,13 @@
   /* Bolt.diy style color variables */
   :root {
     --gradient-opacity: 0.8;
-    --primary-color: rgba(139, 92, 246, var(--gradient-opacity));
-    --secondary-color: rgba(236, 72, 153, var(--gradient-opacity));
-    --accent-color: rgba(59, 130, 246, var(--gradient-opacity));
+    --primary-color: rgba(43, 179, 230, var(--gradient-opacity));
+    --secondary-color: rgba(15, 80, 110, var(--gradient-opacity));
+    --accent-color: rgba(76, 202, 255, var(--gradient-opacity));
     --bolt-bg-primary: #0c0a14;
     --bolt-bg-secondary: #15111e;
     --bolt-bg-tertiary: #1e1a2a;
-    --bolt-border-color: rgba(139, 92, 246, 0.2);
+    --bolt-border-color: rgba(43, 179, 230, 0.22);
     --bolt-text-primary: #e5e2ff;
     --bolt-text-secondary: #a8a4ce;
     --bolt-text-tertiary: #6b6685;

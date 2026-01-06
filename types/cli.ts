@@ -61,7 +61,7 @@ export const CLI_OPTIONS: CLIOption[] = [
     configured: true,
     enabled: true,
     color: 'from-orange-500 to-red-600',
-    brandColor: '#DE7356',
+    brandColor: '#2BB3E6',
     downloadUrl: 'https://docs.anthropic.com/en/docs/claude-code/overview',
     installCommand: 'npm install -g @anthropic-ai/claude-code',
     features: ['Advanced reasoning', 'Code generation', '1M context window'],

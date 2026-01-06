@@ -20,7 +20,7 @@ export type ProjectStatus =
   | 'active'
   | 'failed';
 
-export type TemplateType = 'nextjs' | 'react' | 'vue' | 'custom';
+export type TemplateType = 'nextjs' | 'react' | 'vue' | 'custom' | 'leytongo-monorepo';
 
 /**
  * Service Connection Status

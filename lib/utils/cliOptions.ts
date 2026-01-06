@@ -25,7 +25,7 @@ export const ACTIVE_CLI_OPTIONS_MAP = ACTIVE_CLI_OPTIONS.reduce<Record<ActiveCli
 }, {} as Record<ActiveCliId, ActiveCliOption>);
 
 export const ACTIVE_CLI_BRAND_COLORS = ACTIVE_CLI_OPTIONS.reduce<Record<ActiveCliId, string>>((acc, option) => {
-  acc[option.id] = option.brandColor ?? '#DE7356';
+  acc[option.id] = option.brandColor ?? '#2BB3E6';
   return acc;
 }, {} as Record<ActiveCliId, string>);
 

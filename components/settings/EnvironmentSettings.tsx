@@ -23,6 +23,9 @@ export function EnvironmentSettings({ projectId }: EnvironmentSettingsProps) {
   const [isSecret, setIsSecret] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [targetEnv, setTargetEnv] = useState<'leytongo-front/.env' | 'leytongo-back/.env'>('leytongo-front/.env');
+  const [syncMessage, setSyncMessage] = useState<string | null>(null);
+  const [conflictsCount, setConflictsCount] = useState<number>(0);
 
   const loadEnvironmentVariables = useCallback(async () => {
     setIsLoading(true);
@@ -39,9 +42,68 @@ export function EnvironmentSettings({ projectId }: EnvironmentSettingsProps) {
     }
   }, [projectId]);
 
+  const loadConflicts = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${API_BASE}/api/env/${projectId}/conflicts?target=${encodeURIComponent(targetEnv)}`
+      );
+      if (!response.ok) return;
+      const data = await response.json();
+      const conflicts = Array.isArray(data?.conflicts) ? data.conflicts : [];
+      setConflictsCount(conflicts.length);
+    } catch {
+      // ignore
+    }
+  }, [projectId, targetEnv]);
+
   useEffect(() => {
     loadEnvironmentVariables();
   }, [loadEnvironmentVariables]);
+
+  useEffect(() => {
+    loadConflicts();
+  }, [loadConflicts]);
+
+  const handleImportFromFile = async () => {
+    setSyncMessage(null);
+    try {
+      const response = await fetch(
+        `${API_BASE}/api/env/${projectId}/sync/file-to-db?target=${encodeURIComponent(targetEnv)}`,
+        { method: 'POST' }
+      );
+      const data = await response.json().catch(() => null);
+      if (!response.ok) {
+        setSyncMessage(data?.message || 'Import failed');
+        return;
+      }
+      setSyncMessage(data?.message || 'Imported env vars from file');
+      await loadEnvironmentVariables();
+      await loadConflicts();
+    } catch (error) {
+      console.error('Failed to import env vars from file:', error);
+      setSyncMessage('Import failed');
+    }
+  };
+
+  const handleExportToFile = async () => {
+    setSyncMessage(null);
+    try {
+      const response = await fetch(
+        `${API_BASE}/api/env/${projectId}/sync/db-to-file?target=${encodeURIComponent(targetEnv)}`,
+        { method: 'POST' }
+      );
+      const data = await response.json().catch(() => null);
+      if (!response.ok) {
+        setSyncMessage(data?.message || 'Export failed');
+        return;
+      }
+      setSyncMessage(data?.message || 'Exported env vars to file');
+      await loadConflicts();
+    } catch (error) {
+      console.error('Failed to export env vars to file:', error);
+      setSyncMessage('Export failed');
+    }
+  };
 
   const handleAdd = async () => {
     if (!newKey || !newValue) return;
@@ -117,6 +179,50 @@ export function EnvironmentSettings({ projectId }: EnvironmentSettingsProps) {
         <h3 className="text-lg font-medium text-gray-900 mb-4">
           Environment Variables
         </h3>
+
+        {/* Sync Controls */}
+        <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4 space-y-3">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-700">Target file</span>
+              <select
+                value={targetEnv}
+                onChange={(e) => setTargetEnv(e.target.value as any)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+              >
+                <option value="leytongo-front/.env">leytongo-front/.env</option>
+                <option value="leytongo-back/.env">leytongo-back/.env</option>
+              </select>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleImportFromFile}
+                className="px-3 py-2 text-sm bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 transition-colors"
+              >
+                Import from file
+              </button>
+              <button
+                onClick={handleExportToFile}
+                className="px-3 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+              >
+                Export to file
+              </button>
+            </div>
+          </div>
+
+          {typeof conflictsCount === 'number' && conflictsCount > 0 && (
+            <div className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
+              Warning: {conflictsCount} difference(s) detected between CognitXable and {targetEnv}. Use Import/Export to resolve.
+            </div>
+          )}
+
+          {syncMessage && (
+            <div className="text-sm text-gray-700">
+              {syncMessage}
+            </div>
+          )}
+        </div>
 
         {/* Variables List */}
         <div className="space-y-2 mb-6">

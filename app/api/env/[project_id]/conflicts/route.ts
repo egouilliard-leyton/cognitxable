@@ -5,10 +5,12 @@ interface RouteContext {
   params: Promise<{ project_id: string }>;
 }
 
-export async function GET(_request: Request, { params }: RouteContext) {
+export async function GET(request: Request, { params }: RouteContext) {
   try {
     const { project_id } = await params;
-    const result = await detectEnvConflicts(project_id);
+    const { searchParams } = new URL(request.url);
+    const target = searchParams.get('target') ?? undefined;
+    const result = await detectEnvConflicts(project_id, target || undefined);
     return NextResponse.json(result);
   } catch (error) {
     console.error('[Env API] Failed to check conflicts:', error);

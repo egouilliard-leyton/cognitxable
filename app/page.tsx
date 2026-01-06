@@ -820,7 +820,7 @@ export default function HomePage() {
                           <h3 
                             className="text-gray-900 text-sm transition-colors truncate"
                             style={{
-                              '--hover-color': projectColor || '#DE7356'
+                              '--hover-color': projectColor || '#2BB3E6'
                             } as React.CSSProperties}
                           >
                             <span 
@@ -921,7 +921,7 @@ export default function HomePage() {
                     lineHeight: '72px'
                   }}
                 >
-                  Claudable
+                  CognitXable
                 </h1>
               </div>
               <p className="text-xl text-gray-700 font-light tracking-tight">
@@ -964,7 +964,7 @@ export default function HomePage() {
               onDrop={handleDrop}
               className={`group flex flex-col gap-4 p-4 w-full rounded-[28px] border backdrop-blur-xl text-base shadow-xl transition-all duration-150 ease-in-out mb-6 relative overflow-visible ${
                 isDragOver 
-                  ? 'border-[#DE7356] bg-[#DE7356]/10 ' 
+                  ? 'border-brand-500 bg-brand-500/10 ' 
                   : 'border-gray-200 bg-white '
               }`}
             >
@@ -972,7 +972,7 @@ export default function HomePage() {
                 <textarea
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Ask Claudable to create a blog about..."
+                  placeholder="Ask CognitXable to create a blog about..."
                   disabled={isCreatingProject}
                   className="flex w-full rounded-md px-2 py-2 placeholder:text-gray-400 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 resize-none text-[16px] leading-snug md:text-base focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent focus:bg-transparent flex-1 text-gray-900 overflow-y-auto"
                   style={{ height: '120px' }}
@@ -992,13 +992,13 @@ export default function HomePage() {
               
               {/* Drag overlay */}
               {isDragOver && (
-                <div className="absolute inset-0 bg-[#DE7356]/10 rounded-[28px] flex items-center justify-center z-10 border-2 border-dashed border-[#DE7356]">
+                <div className="absolute inset-0 bg-brand-500/10 rounded-[28px] flex items-center justify-center z-10 border-2 border-dashed border-brand-500">
                   <div className="text-center">
                     <div className="text-3xl mb-3">📸</div>
-                    <div className="text-lg font-semibold text-[#DE7356] mb-2">
+                    <div className="text-lg font-semibold text-brand-600 mb-2">
                       Drop images here
                     </div>
-                    <div className="text-sm text-[#DE7356] ">
+                    <div className="text-sm text-brand-600 ">
                       Supports: JPG, PNG, GIF, WEBP
                     </div>
                   </div>
@@ -1169,7 +1169,7 @@ export default function HomePage() {
                   key={example.text}
                   onClick={() => setPrompt(example.prompt)}
                   disabled={isCreatingProject}
-                  className="px-4 py-2 text-sm font-medium text-gray-500 bg-transparent border border-[#DE7356]/10 rounded-full hover:bg-gray-50 hover:border-[#DE7356]/15 hover:text-gray-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-sm font-medium text-gray-500 bg-transparent border border-brand-500/10 rounded-full hover:bg-gray-50 hover:border-brand-500/15 hover:text-gray-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {example.text}
                 </button>

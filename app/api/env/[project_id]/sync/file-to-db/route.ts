@@ -5,10 +5,12 @@ interface RouteContext {
   params: Promise<{ project_id: string }>;
 }
 
-export async function POST(_request: Request, { params }: RouteContext) {
+export async function POST(request: Request, { params }: RouteContext) {
   try {
     const { project_id } = await params;
-    const synced = await syncEnvFileToDb(project_id);
+    const { searchParams } = new URL(request.url);
+    const target = searchParams.get('target') ?? undefined;
+    const synced = await syncEnvFileToDb(project_id, target || undefined);
     return NextResponse.json({
       success: true,
       synced_count: synced,

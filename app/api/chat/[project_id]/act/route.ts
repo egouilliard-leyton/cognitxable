@@ -10,16 +10,17 @@ import {
   updateProjectActivity,
 } from '@/lib/services/project';
 import { createMessage } from '@/lib/services/message';
-import { initializeNextJsProject as initializeClaudeProject, applyChanges as applyClaudeChanges } from '@/lib/services/cli/claude';
-import { initializeNextJsProject as initializeCodexProject, applyChanges as applyCodexChanges } from '@/lib/services/cli/codex';
-import { initializeNextJsProject as initializeCursorProject, applyChanges as applyCursorChanges } from '@/lib/services/cli/cursor';
-import { initializeNextJsProject as initializeQwenProject, applyChanges as applyQwenChanges } from '@/lib/services/cli/qwen';
-import { initializeNextJsProject as initializeGLMProject, applyChanges as applyGLMChanges } from '@/lib/services/cli/glm';
+import { initializeMonorepoProject as initializeClaudeProject, applyChanges as applyClaudeChanges } from '@/lib/services/cli/claude';
+import { initializeMonorepoProject as initializeCodexProject, applyChanges as applyCodexChanges } from '@/lib/services/cli/codex';
+import { initializeMonorepoProject as initializeCursorProject, applyChanges as applyCursorChanges } from '@/lib/services/cli/cursor';
+import { initializeMonorepoProject as initializeQwenProject, applyChanges as applyQwenChanges } from '@/lib/services/cli/qwen';
+import { initializeMonorepoProject as initializeGLMProject, applyChanges as applyGLMChanges } from '@/lib/services/cli/glm';
 import { getDefaultModelForCli, normalizeModelId } from '@/lib/constants/cliModels';
 import { streamManager } from '@/lib/services/stream';
 import type { ChatActRequest } from '@/types/backend';
 import { generateProjectId } from '@/lib/utils';
 import { previewManager } from '@/lib/services/preview';
+import { scaffoldLeytongoMonorepo } from '@/lib/utils/scaffold';
 import path from 'path';
 import fs from 'fs/promises';
 import { randomUUID } from 'crypto';
@@ -371,6 +372,15 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
     const projectPath = project.repoPath || path.join(process.cwd(), 'projects', project_id);
 
     const existingSelected = normalizeModelId(project.preferredCli ?? 'claude', project.selectedModel ?? undefined);
+
+    if (isInitialPrompt) {
+      try {
+        await fs.access(path.join(projectPath, 'package.json'));
+      } catch {
+        // Ensure preview start never falls back to scaffolding a minimal Next.js app.
+        await scaffoldLeytongoMonorepo(projectPath, project_id);
+      }
+    }
 
     if (
       project.preferredCli !== cliPreference ||

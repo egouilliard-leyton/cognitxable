@@ -40,9 +40,9 @@ export default function Header() {
             )}
             <div className="h-8">
               <Image
-                src="/Claudable_logo.svg"
-                alt="Claudable"
-                width={120}
+                src="/CognitX_logo.svg"
+                alt="Leyton CognitX"
+                width={180}
                 height={32}
                 className="h-8 w-auto"
                 priority

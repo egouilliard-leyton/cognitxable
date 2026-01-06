@@ -38,7 +38,7 @@ const CLI_OPTIONS: CLIOption[] = [
     icon: '',
     description: 'Anthropic Claude with advanced reasoning',
     color: 'from-orange-500 to-red-600',
-    brandColor: '#DE7356',
+    brandColor: '#2BB3E6',
     downloadUrl: 'https://docs.anthropic.com/en/docs/claude-code/overview',
     installCommand: 'npm install -g @anthropic-ai/claude-code',
     enabled: true,
@@ -368,7 +368,7 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
                 </span>
                 <div>
                   <h2 className="text-xl font-semibold text-gray-900 ">Global Settings</h2>
-                  <p className="text-sm text-gray-600 ">Configure your Claudable preferences</p>
+                  <p className="text-sm text-gray-600 ">Configure your CognitXable preferences</p>
                 </div>
               </div>
               <button
@@ -396,7 +396,7 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-all ${
                     activeTab === tab.id
-                      ? 'border-[#DE7356] text-gray-900 '
+                      ? 'border-brand-500 text-gray-900 '
                       : 'border-transparent text-gray-600 hover:text-gray-700 hover:border-gray-300 '
                   }`}
                 >
@@ -420,7 +420,7 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
                       </div>
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" className="sr-only peer" defaultChecked />
-                        <div className="w-11 h-6 bg-white rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#DE7356]"></div>
+                        <div className="w-11 h-6 bg-white rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-500"></div>
                       </label>
                     </div>
                     
@@ -431,7 +431,7 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
                       </div>
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" className="sr-only peer" defaultChecked />
-                        <div className="w-11 h-6 bg-white rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#DE7356]"></div>
+                        <div className="w-11 h-6 bg-white rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-500"></div>
                       </label>
                     </div>
                   </div>
@@ -710,7 +710,7 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
                   <div className="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-200 ">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <svg className="h-5 w-5 text-[#DE7356]" viewBox="0 0 20 20" fill="currentColor">
+                        <svg className="h-5 w-5 text-brand-500" viewBox="0 0 20 20" fill="currentColor">
                           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                         </svg>
                       </div>
@@ -735,23 +735,23 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
               <div className="space-y-6">
                 <div className="text-center">
                   <div className="w-20 h-20 mx-auto mb-4 relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#DE7356]/20 to-[#DE7356]/5 blur-xl rounded-2xl" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-brand-500/20 to-brand-500/5 blur-xl rounded-2xl" />
                     <Image
-                      src="/Claudable_Icon.png"
-                      alt="Claudable Icon"
+                      src="/CognitX_Icon.svg"
+                      alt="CognitXable Icon"
                       width={80}
                       height={80}
                       className="relative z-10 w-full h-full object-contain rounded-2xl shadow-lg"
                     />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 ">Claudable</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 ">CognitXable</h3>
                   <p className="text-gray-600 mt-2 font-medium">Version 1.0.0</p>
                 </div>
                 
                 <div className="bg-gray-50 rounded-xl border border-gray-200 p-6 space-y-4">
                   <div className="text-center">
                     <p className="text-base text-gray-700 leading-relaxed max-w-2xl mx-auto">
-                      Claudable is an AI-powered development platform that integrates with GitHub, Supabase, and Vercel 
+                      CognitXable is an AI-powered development platform that integrates with GitHub, Supabase, and Vercel 
                       to streamline your web development workflow.
                     </p>
                   </div>
@@ -759,7 +759,7 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
                   <div className="grid grid-cols-2 gap-4 text-center">
                     <div className="p-3 rounded-xl border border-gray-200/50 bg-transparent">
                       <div className="flex items-center justify-center mb-2">
-                        <svg className="w-5 h-5 text-[#DE7356]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-5 h-5 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
                       </div>
@@ -767,7 +767,7 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
                     </div>
                     <div className="p-3 rounded-xl border border-gray-200/50 bg-transparent">
                       <div className="flex items-center justify-center mb-2">
-                        <svg className="w-5 h-5 text-[#DE7356]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-5 h-5 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                         </svg>
                       </div>
@@ -782,7 +782,7 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
                       href="https://github.com/opactorai/Claudable" 
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-[#DE7356] hover:text-[#c95940] transition-colors"
+                      className="text-sm text-brand-600 hover:text-brand-700 transition-colors"
                     >
                       GitHub
                     </a>
@@ -790,7 +790,7 @@ export default function GlobalSettings({ isOpen, onClose, initialTab = 'general'
                       href="https://discord.gg/NJNbafHNQC" 
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-[#DE7356] hover:text-[#c95940] transition-colors"
+                      className="text-sm text-brand-600 hover:text-brand-700 transition-colors"
                     >
                       Discord
                     </a>

@@ -1008,7 +1008,7 @@ async function executeCodex(
   }
 }
 
-export async function initializeNextJsProject(
+export async function initializeMonorepoProject(
   projectId: string,
   projectPath: string,
   initialPrompt: string,
@@ -1016,14 +1016,68 @@ export async function initializeNextJsProject(
   requestId?: string,
 ): Promise<void> {
   const fullPrompt = `
-Create a new Next.js 15 application with the following requirements:
+You are initializing a NEW monorepo project in the existing repository at:
+${projectPath}
+
+The repository is already bootstrapped with this structure:
+- leytongo-front/ (frontend)
+- leytongo-back/ (backend)
+- devops/ (infra placeholder)
+
+Critical rules:
+- Do NOT create a Next.js app at the repository root.
+- Keep the root package.json scripts intact (predev/dev). Claudable preview runs at repo root:
+  - npm run predev
+  - npm run dev -- --port <assignedPort>
+- Do NOT hardcode ports in Vite or backend config. Claudable injects the frontend port via --port.
+- The repo already contains a working scaffold. Do NOT replace it with a new template or rename folders. Only modify what is necessary to satisfy the user's request.
+
+Frontend requirements (leytongo-front):
+- Use Vite + React + TypeScript.
+- Ensure API calls are same-origin to /api/v1 (no absolute backend URL in the browser).
+- Configure Vite dev proxy so requests to /api/v1/* are proxied to 127.0.0.1:<BACKEND_PORT> (read BACKEND_PORT from environment).
+- Branding: keep it generic (e.g. "Welcome to your new project" / "Project Preview"). Do NOT use "LeytonGo" or "Leytongo" branding in the UI.
+- Health check UX: do NOT auto-call /api/v1/health on page load and do NOT poll it continuously. If you add a button to run a health check, show a neutral "not run yet" state by default and only show errors after a user action.
+
+Backend requirements (leytongo-back):
+- Use Fastify + TypeScript.
+- Listen on HOST/PORT environment variables (HOST defaults to 127.0.0.1).
+- Expose GET /api/v1/health returning JSON.
+- Backend start must be resilient: do not block on local Postgres; make DB optional and fail gracefully.
+- /api/v1/health must always respond 200 with JSON and must not require secrets/DB/env to be set. Do not throw 500 from the health endpoint.
+
+Secrets and env:
+- Do not commit secrets.
+- If needed, add .env.example files describing required variables.
+
+User requirements:
 ${initialPrompt}
 
-Use App Router, TypeScript, and Tailwind CSS.
-Set up the basic project structure and implement the requested features.
+Deliverables:
+- leytongo-front and leytongo-back have working dev scripts.
+- Frontend can call backend through /api/v1 during preview (via proxy).
 `.trim();
 
   await executeCodex(projectId, projectPath, fullPrompt, model ?? getDefaultModelForCli('codex'), requestId, true);
+}
+
+/**
+ * Backward-compatible alias (legacy name)
+ */
+export async function initializeNextJsProject(
+  projectId: string,
+  projectPath: string,
+  initialPrompt: string,
+  model: string = CODEX_DEFAULT_MODEL,
+  requestId?: string,
+): Promise<void> {
+  return initializeMonorepoProject(
+    projectId,
+    projectPath,
+    initialPrompt,
+    model,
+    requestId,
+  );
 }
 
 export async function applyChanges(

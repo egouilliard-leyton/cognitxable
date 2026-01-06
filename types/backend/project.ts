@@ -4,7 +4,7 @@
 
 export type ProjectStatus = 'idle' | 'running' | 'stopped' | 'error';
 
-export type TemplateType = 'nextjs' | 'react' | 'vue' | 'custom';
+export type TemplateType = 'nextjs' | 'react' | 'vue' | 'custom' | 'leytongo-monorepo';
 
 export interface Project {
   id: string;
